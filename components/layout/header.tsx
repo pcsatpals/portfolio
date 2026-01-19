@@ -22,17 +22,17 @@ const links = [
 
 const Header = () => {
     return (
-        <header className=" body-font sm:h-28.25 bg-header lg:sticky top-0 z-[999]">
-            <div className="mx-auto max-w-[1130px] flex flex-wrap  flex-col h-full md:flex-row items-center gap-[60%]">
+        <header className="body-font h-18 xl:h-22 bg-header/40 backdrop-blur-sm lg:sticky top-0 z-999 border-b border-white/10">
+            <div className="mx-auto max-w-6xl px-10 xl:px-0 flex flex-col h-full md:flex-row items-center justify-between w-full">
                 <Link href="/" className="flex title-font font-medium items-center md:mb-0 [&_svg]:size-10 h-full">
                     <Logo />
                 </Link>
-                <nav className="md:ml-auto grow flex flex-wrap items-center text-base justify-between font-jakarta-sans">
+                <nav className="gap-6 flex items-center text-base font-jakarta-sans">
                     {links.map((item, ix) => (
                         <Link
                             href={item.link}
                             key={ix}
-                            className=" hover:text-foreground/80 group relative"
+                            className=" hover:text-foreground/80 group text-sm xl:text-base relative text-nowrap"
                         >
                             {item.label}
                             <span className='w-0 absolute transition-all left-0 h-0.5 group-hover:w-full delay-200 group-hover:delay-0 bg-card bottom-0'></span>
