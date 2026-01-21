@@ -13,16 +13,16 @@ interface MongooseCache {
 
 declare global {
     // eslint-disable-next-line no-var
-    var mongoose: MongooseCache | undefined;
+    var _mongoose: MongooseCache | undefined;
 }
 
 
-const cached = global.mongoose || {
+const cached = global._mongoose || {
     conn: null,
     promise: null,
 };
 
-global.mongoose = cached;
+global._mongoose = cached;
 
 
 export async function connectDB() {
