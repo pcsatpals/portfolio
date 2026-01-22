@@ -3,7 +3,7 @@ import React from 'react'
 
 const WorkExperience = () => {
     return (
-        <div className='flex flex-col gap-11 relative font-preahvihear-sans mt-30 w-full px-10 xl:px-0'>
+        <div className='flex flex-col gap-11 relative font-preahvihear-sans mt-30 w-full px-6 sm:px-10 xl:px-0'>
             <div className='xl:w-156.25 sm:w-60 w-[50%] xl:h-175 sm:h-80 h-50 rounded-full opacity-40 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2'
                 style={{
                     background: 'radial-gradient(circle, #763CAC 0%, rgb(50, 15, 133, 0) 68%)',
