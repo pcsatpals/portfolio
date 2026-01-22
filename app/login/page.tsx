@@ -1,16 +1,14 @@
 "use client"
 
 import { Button } from '@/components/ui/button'
-import { FieldDescription } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Eye, EyeClosed, LockKeyhole, LogIn, Mail } from 'lucide-react'
-import Link from 'next/link'
 import z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'react-toastify'
 import { signIn } from 'next-auth/react'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { useState } from 'react'
 import StarBorder from '@/components/layout/star-border'
@@ -48,7 +46,7 @@ const SignIn = () => {
                 }
 
                 // Success - manually redirect
-                window.location.href = "/";
+                window.location.href = "/dashboard";
                 return result;
             })(),
             {
@@ -64,7 +62,7 @@ const SignIn = () => {
     }
 
     return (
-        <Card className="mx-auto bg-background/40 rounded-3xl border border-white/10 backdrop-blur-xl w-110 sm:p-5 p-5">
+        <Card className="mx-auto bg-background rounded-3xl border border-white/10 backdrop-blur-xl w-110 sm:p-5 p-5">
             <CardHeader className="flex flex-col items-center px-0">
                 <div className='md:w-16 md:h-16 h-12 w-12 md:[&_svg]:size-8 [&_svg]:size-5 flex items-center justify-center bg-white shrink-0 text-background rounded-2xl'>
                     <LogIn />

@@ -1,8 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import axios from "axios";
-import { NextAuthOptions } from "next-auth";
+import type { AuthOptions } from "next-auth";
 
-export const authOptions: NextAuthOptions = {
+export const authOptions: AuthOptions = {
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -11,19 +10,30 @@ export const authOptions: NextAuthOptions = {
                 password: { type: "password" },
             },
             async authorize(credentials) {
+                console.log(credentials)
                 if (!credentials?.email || !credentials?.password) {
                     return null;
                 }
 
-                const res = await axios.post(
-                    `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/login`,
-                    credentials
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_APP_URL}/api/login`,
+                    {
+                        method: "POST",
+                        body: JSON.stringify({
+                            email: credentials.email,
+                            password: credentials.password
+                        }),
+                    }
                 );
+                console.log(res.ok, `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/login`)
+                if (!res.ok) return null;
 
-                const { user, accessToken, refreshToken } = res.data;
-
+                const { user, accessToken, refreshToken } = await res.json();
+                console.log(user)
                 return {
-                    ...user,
+                    id: user.id.toString(),
+                    email: user.email,
+                    name: user.userName,
                     accessToken,
                     refreshToken,
                 };
@@ -44,11 +54,13 @@ export const authOptions: NextAuthOptions = {
         },
 
         async session({ session, token }) {
-            session.user.id = token.id as string;
+            if (session.user) {
+                session.user.id = token.id as string;
+            }
             session.accessToken = token.accessToken as string;
             return session;
         },
     },
-
+    pages: { signIn: "/login", error: "/login" },
     secret: process.env.NEXTAUTH_SECRET,
 };

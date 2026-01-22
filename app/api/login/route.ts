@@ -19,13 +19,10 @@ function getEnv(name: string): string {
 
 export async function POST(request: Request) {
   try {
-    // 1️⃣ Ensure DB connection
     await connectDB();
 
-    // 2️⃣ Parse request body
     const { email, password }: LoginRequestBody = await request.json();
 
-    // 3️⃣ Validate input
     if (!email?.trim() || !password?.trim()) {
       return NextResponse.json(
         { message: "Email and password are required" },
@@ -33,7 +30,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // 4️⃣ Find user
     const user = await User.findOne({ email }).select("+password");
 
     if (!user) {
@@ -43,7 +39,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // 5️⃣ Compare password
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
@@ -70,7 +65,6 @@ export async function POST(request: Request) {
     );
 
 
-    // 7️⃣ Success response
     return NextResponse.json(
       {
         user: {

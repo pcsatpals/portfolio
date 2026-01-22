@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Preahvihear } from "next/font/google";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import CustomCursor from "@/components/animation/custom-cursor";
+import SessionProvider from "@/providers/next-auth-provider";
 
 const preahvihearSans = Preahvihear({
     variable: "--font-preahvihear-sans",
@@ -34,7 +35,9 @@ export default function RootLayout({
                 className={`${preahvihearSans.variable} ${geistMono.variable} antialiased`}
             >
                 <CustomCursor />
-                {children}
+                <SessionProvider>
+                    {children}
+                </SessionProvider>
                 <ToastContainer theme="dark" position="bottom-right" />
             </body>
         </html>
