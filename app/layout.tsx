@@ -4,6 +4,7 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import CustomCursor from "@/components/animation/custom-cursor";
 import SessionProvider from "@/providers/next-auth-provider";
+import { QueryProvider } from "@/providers/query-provider";
 
 const preahvihearSans = Preahvihear({
     variable: "--font-preahvihear-sans",
@@ -34,11 +35,13 @@ export default function RootLayout({
             <body
                 className={`${preahvihearSans.variable} ${geistMono.variable} antialiased no-scrollbar`}
             >
-                <CustomCursor />
-                <SessionProvider>
-                    {children}
-                </SessionProvider>
-                <ToastContainer theme="dark" position="bottom-right" />
+                <QueryProvider>
+                    <CustomCursor />
+                    <SessionProvider>
+                        {children}
+                    </SessionProvider>
+                    <ToastContainer theme="dark" position="bottom-right" />
+                </QueryProvider>
             </body>
         </html>
     );

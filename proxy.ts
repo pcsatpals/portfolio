@@ -18,6 +18,8 @@ export default withAuth(
         callbacks: {
             authorized({ req, token }) {
                 const { pathname } = req.nextUrl;
+                const method = req.method;
+
                 const isPublicPath =
                     pathname === "/" ||
                     pathname.startsWith("/api/auth") ||
@@ -27,6 +29,10 @@ export default withAuth(
                 // 1. Always allow public paths
                 if (isPublicPath) return true;
 
+                // Allow GET requests to projects even if not logged in
+                if (pathname.startsWith("/api/projects") && method === "GET") {
+                    return true;
+                }
                 // 2. CRITICAL: If token has a refresh error, treat as unauthorized
                 // Returning false here triggers an automatic redirect to the sign-in page
                 if (token?.error === "RefreshAccessTokenError") {
@@ -50,6 +56,5 @@ export const config = {
          * - favicon.ico (favicon file)
          * - All image/asset extensions (jpg, jpeg, png, gif, svg, webp, mp4)
          */
-        "/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)",
-    ],
+        "/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)",],
 };
