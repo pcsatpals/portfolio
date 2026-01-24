@@ -13,15 +13,15 @@ export interface User {
 const UserSchema = new Schema<User>(
     {
         userName: {
-            type: "String",
+            type: String,
             required: true
         },
         email: {
-            type: "String",
+            type: String,
             required: true
         },
         password: {
-            type: "String",
+            type: String,
             required: true,
             select: false
         }

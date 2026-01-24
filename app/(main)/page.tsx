@@ -8,8 +8,8 @@ export default function Home() {
       <WorkExperience />
       <div className='flex flex-col gap-8 w-full sm:mt-40 mt-20 font-preahvihear-sans'>
         <div className='flex flex-col w-full  items-center px-6 sm:px-10 xl:px-0'>
-          <p className='xl:text-[26px] sm:text-2xl text-xl text-center w-fit'>
-            {"I'm currently looking to join a"} <span className='text-primary'>cross-functional</span> team
+          <p className='xl:text-[26px] sm:text-2xl text-xl text-center w-fit px-5 sm:px-0'>
+            {"I'm currently looking to join a"} <span className='text-primary'>cross-functional team </span>
           </p>
           <p className="mt-1 xl:text-lg text-sm text-center">{"that values improving people's lives through accessible design"} </p>
         </div>

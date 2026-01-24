@@ -17,9 +17,9 @@ const geistMono = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-    title: "Building with Purpose",
+    title: "Satpal Singh - Software Developer",
     icons: {
-        icon: "/logo.svg"
+        icon: "/ME.png"
     },
     description: "A showcase of my work as a software developer, focused on creating reliable, accessible, and impactful digital products.",
 };
@@ -32,7 +32,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${preahvihearSans.variable} ${geistMono.variable} antialiased`}
+                className={`${preahvihearSans.variable} ${geistMono.variable} antialiased no-scrollbar`}
             >
                 <CustomCursor />
                 <SessionProvider>

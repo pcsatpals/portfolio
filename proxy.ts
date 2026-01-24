@@ -8,8 +8,8 @@ export default withAuth(
 
         // If user is logged in and tries to access sign-in or sign-up, redirect to dashboard
         // Note: We also check for the error here to ensure we don't redirect a "broken" session to dashboard
-        if (token && !token.error && (pathname === "/login")) {
-            return NextResponse.redirect(new URL("/dashboard", req.url));
+        if (token && !token.error && (pathname === "/admin/login")) {
+            return NextResponse.redirect(new URL("/admin/dashboard", req.url));
         }
 
         return NextResponse.next();
@@ -22,7 +22,7 @@ export default withAuth(
                     pathname === "/" ||
                     pathname.startsWith("/api/auth") ||
                     pathname.startsWith("/api/login") ||
-                    pathname === "/login"
+                    pathname === "/admin/login"
 
                 // 1. Always allow public paths
                 if (isPublicPath) return true;
