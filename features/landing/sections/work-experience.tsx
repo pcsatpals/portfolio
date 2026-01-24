@@ -9,7 +9,7 @@ const WorkExperience = () => {
                     background: 'radial-gradient(circle, #763CAC 0%, rgb(50, 15, 133, 0) 68%)',
                 }}
             />
-            <p className='text-3xl sm:text-5xl xl:text-[50px]'>Work Experience</p>
+            <p className='text-3xl sm:text-5xl xl:text-[50px]  text-center sm:text-left '>Work Experience</p>
             <div className='w-full grid sm:grid-cols-2 grid-cols-1'>
                 <div className='w-full  h-fit xl:h-48 rounded-2xl xl:px-12.5 px-6 py-5 xl:py-9 bg-[linear-gradient(to_right,#130428_7%,#251043_34%,#38126D_57%,#261045_85%,#190634_100%)] border-t-4 border-primary flex items-center gap-6.25 hover:shadow-2xl hover:shadow-purple-800 transition-all'>
                     <Image src="/work-exp.svg" height={1200} width={1200} alt='work Experience' className='xl:h-28.75 h-20 w-auto' />

@@ -46,7 +46,7 @@ const SignIn = () => {
                 }
 
                 // Success - manually redirect
-                window.location.href = "/dashboard";
+                window.location.href = "/admin/dashboard";
                 return result;
             })(),
             {

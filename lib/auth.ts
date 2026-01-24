@@ -61,6 +61,6 @@ export const authOptions: AuthOptions = {
             return session;
         },
     },
-    pages: { signIn: "/login", error: "/login" },
+    pages: { signIn: "/admin/login", error: "/admin/login" },
     secret: process.env.NEXTAUTH_SECRET,
 };
