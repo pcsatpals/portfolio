@@ -19,7 +19,7 @@ const Hero = () => {
                     transition={{ duration: 0.9, ease: "easeOut" }}
                     className=' w-67 sm:w-85 xl:w-[30%] h-85 sm:h-107.75 ml-8 mt-16 sm:mt-0 sm:mx-0 inset-0 bg-transparent rounded-full overflow-visible relative'
                     style={{
-                        background: 'radial-gradient(circle, #763CAC50 0%, rgb(50, 15, 133, 0) 65%)',
+                        background: 'radial-gradient(circle, #763CAC50 0%, rgba(50, 15, 133, 0) 65%)',
                     }}
                 >
                     <MotionImage
