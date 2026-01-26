@@ -20,7 +20,7 @@ const geistMono = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
     title: "Satpal Singh - Software Developer",
     icons: {
-        icon: "/ME.png"
+        icon: "/favicon.ico"
     },
     description: "A showcase of my work as a software developer, focused on creating reliable, accessible, and impactful digital products.",
 };

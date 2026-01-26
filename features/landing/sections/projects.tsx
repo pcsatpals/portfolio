@@ -139,24 +139,17 @@ const ProjectCard = ({ project, isEven, showFeatureHeading }: ProjectCardProps) 
                     background: 'radial-gradient(circle, #763CAC50 0%, rgba(50, 15, 133, 0) 65%)',
                 }} />
         </motion.div>
-        <div className="w-full lg:w-1/2 shrink-0 relative z-0">
-            <MotionImage
-                initial={{ x: isEven ? "-10%" : "10%", opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
-                src={project.project_image || ""}
-                height={1600}
-                width={1600}
-                className="w-full aspect-4/3 h-full object-contain"
-                alt={project.title}
-            />
-            <div className={`h-full absolute w-full top-0 rounded-full ${isEven ? "right-0" : "left-0"}`}
-                style={{
-                    background: 'radial-gradient(circle, #763CAC50 0%, rgba(50, 15, 133, 0) 65%)',
-                }}
-            />
-        </div>
+        <MotionImage
+            initial={{ x: isEven ? "-10%" : "10%", opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
+            src={project.project_image || ""}
+            height={1600}
+            width={1600}
+            className="w-full lg:w-1/2 shrink-0 aspect-4/3 h-full object-contain"
+            alt={project.title}
+        />
     </div>
 )
 
