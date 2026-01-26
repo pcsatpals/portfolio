@@ -22,6 +22,7 @@ export default withAuth(
 
                 const isPublicPath =
                     pathname === "/" ||
+                    !pathname.includes("admin") ||
                     pathname.startsWith("/api/auth") ||
                     pathname.startsWith("/api/login") ||
                     pathname === "/admin/login"
