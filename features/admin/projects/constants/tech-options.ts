@@ -19,5 +19,8 @@ export const techOptions = [
     "AWS",
     "Vercel",
     "Render",
+    "NextAuth",
+    "Shadcn UI",
+    "Material UI(MUI)",
     "Mongoose"
 ]

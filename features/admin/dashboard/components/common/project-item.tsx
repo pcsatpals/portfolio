@@ -57,7 +57,7 @@ const ProjectCard = ({ project, dragHandleProps }: {
                 <Image
                     height={1600}
                     width={1600}
-                    className='h-20 w-20 rounded-xl'
+                    className='h-20 w-40 shrink-0 rounded-xl'
                     alt='Project Image'
                     src={project.project_image}
                 /> :
