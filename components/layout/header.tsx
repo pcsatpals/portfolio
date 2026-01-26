@@ -2,6 +2,7 @@
 
 import Logo from "@/public/logo.svg"
 import Link from 'next/link'
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const links = [
@@ -11,21 +12,21 @@ const links = [
     },
     {
         label: "About",
-        link: "#about",
+        link: "/about",
     }
     , {
         label: "Projects",
-        link: "#projects",
+        link: "/projects",
     }
     , {
-        label: "Contact Me",
-        link: "#contact",
+        label: "Contact",
+        link: "/contact-me",
     }
 ]
 
 const Header = () => {
     const [open, setOpen] = useState(false);
-
+    const pathname = usePathname()
     const isMobile = () => window.matchMedia("(max-width: 639px)").matches;
     useEffect(() => {
         if (open && isMobile()) {
@@ -51,7 +52,7 @@ const Header = () => {
     }, [open]);
 
     return (
-        <header className="body-font h-18 xl:h-22 bg-header/40 backdrop-blur-sm lg:sticky top-0 relative z-[999] border-b border-white/10">
+        <header className="body-font h-18 xl:h-22 bg-header/40 backdrop-blur-sm sticky top-0 z-[999] border-b border-white/10">
             <div className="mx-auto max-w-6xl px-6 sm:px-10 xl:px-0 flex h-full flex-row items-center justify-between w-full">
                 <Link href="/" className="flex title-font font-medium items-center md:mb-0 [&_svg]:size-10 h-full">
                     <Logo />
@@ -62,12 +63,15 @@ const Header = () => {
                     <span className={`transition-all h-0.5 bg-white shrink-0 ${open ? "rotate-50 w-5 -translate-y-2" : "w-3"}`} />
                 </button>
 
-                <nav className={`gap-6  sm:items-center text-base font-jakarta-sans  ${open ? "flex flex-col absolute sm:relative top-full right-4 left-4 mt-4 text-left bg-header/80 rounded-3xl z-[999] backdrop-blur-2xl p-5" : "hidden "} sm:flex`}>
+                <nav className={`gap-6  sm:items-center text-base font-jakarta-sans  ${open ? "flex flex-col absolute sm:relative top-full right-4 left-4 mt-4 text-left bg-header/90 rounded-3xl z-[999] backdrop-blur-3xl p-5" : "hidden "} sm:flex`}>
                     {links.map((item, ix) => (
                         <Link
                             href={item.link}
                             key={ix}
-                            className=" hover:text-foreground/80 group text-sm xl:text-base relative text-nowrap"
+                            onClick={() => {
+                                setOpen(false)
+                            }}
+                            className={`hover:text-foreground/80 group text-sm xl:text-base relative text-nowrap ${pathname == item.link ? "text-white" : "text-white/75"}`}
                         >
                             {item.label}
                             <span className='w-0 absolute transition-all left-0 h-0.5 group-hover:w-full delay-200 group-hover:delay-0 bg-card bottom-0'></span>
