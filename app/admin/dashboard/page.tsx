@@ -1,11 +1,7 @@
-import React from 'react'
+import Projects from "@/features/admin/dashboard/components/common"
 
-const Dashboard = () => {
-    return (
-        <div>
-            Dashboard
-        </div>
-    )
+const ProjectsPage = () => {
+    return <Projects />
 }
 
-export default Dashboard
+export default ProjectsPage

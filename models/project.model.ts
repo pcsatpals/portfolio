@@ -1,7 +1,5 @@
-import { models, model, Schema } from "mongoose";
-import { nanoid } from "nanoid";
-import bcrypt from "bcrypt";
-
+import { models, model, Schema, AggregatePaginateModel } from "mongoose";
+import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 export interface Project {
     title: string;
@@ -66,5 +64,9 @@ projectSchema.pre("save", async function () {
     this.position = lastProject ? lastProject.position + 1 : 1
 })
 
+projectSchema.plugin(mongooseAggregatePaginate);
 
-export const Project = models.Project || model<Project>("Project", projectSchema);
+
+
+export const Project = (models.Project as AggregatePaginateModel<Project>) ||
+    model<Project, AggregatePaginateModel<Project>>("Project", projectSchema);

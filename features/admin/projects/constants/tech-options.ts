@@ -1,0 +1,23 @@
+export const techOptions = [
+    "Javascript",
+    "Typescript",
+    "HTML",
+    "CSS",
+    "Tailwind CSS",
+    "ReactJS",
+    "NextJS",
+    "MongoDB",
+    "ExpressJS",
+    "NodeJS",
+    "Payload CMS",
+    "Strapi CMS",
+    "Charts",
+    "multer",
+    "cloudinary",
+    "PostgreSQL",
+    "SQL",
+    "AWS",
+    "Vercel",
+    "Render",
+    "Mongoose"
+]

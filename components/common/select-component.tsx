@@ -17,27 +17,26 @@ const SelectComponent = ({ value, onChange, placeholder, options }: SelectProps)
 
     const handleChange = (v: string) => {
         if (v) {
-            const isIncluded = value.includes(v);
+            const isIncluded = value?.includes(v);
             if (isIncluded) {
-                console.log(value.filter(i => i != v))
-                const filteredValue = value.filter(i => i != v)
+                const filteredValue = value?.filter(i => i != v)
                 onChange(filteredValue)
             } else {
-                onChange([...value, v])
+                onChange([...(value || []), v])
             }
         }
     }
 
     return (
-        <Select value={value.length > 0 ? "__dummy__" : undefined} onValueChange={handleChange} >
+        <Select value={value?.length > 0 ? "__dummy__" : undefined} onValueChange={handleChange} >
             <SelectTrigger className="w-full" >
                 <SelectValue placeholder={placeholder}>
-                    {value.join(", ")}
+                    {value?.join(", ")}
                 </SelectValue>
             </SelectTrigger>
             <SelectContent position="popper">
                 {options.map((item, ix) => <SelectItem key={ix} value={item} className="flex min-w-full justify-between pr-4">
-                    {item} {value.includes(item) && <Check />}
+                    {item} {value?.includes(item) && <Check />}
                 </SelectItem>)}
             </SelectContent>
         </Select>
