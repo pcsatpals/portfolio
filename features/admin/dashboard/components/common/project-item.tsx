@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { Project } from '@/types/portfolio.types'
 import { GripVertical, PencilLine } from 'lucide-react'
 import Image from 'next/image'
@@ -7,6 +7,8 @@ import { CSS } from '@dnd-kit/utilities'
 import DeleteDialog from './delete-dialog';
 import { DraggableAttributes } from '@dnd-kit/core';
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 const DraggableWrapper = ({ project }: { project: Project }) => {
     const { attributes,
@@ -64,18 +66,18 @@ const ProjectCard = ({ project, dragHandleProps }: {
                     className='h-20 w-20 rounded-xl'
                 />
             }
-            <div className='flex flex-col gap-4 grow'>
+            <div className='flex flex-col gap-2 grow'>
                 <p className="text-base sm:text-xl tracking-tight lg:text-2xl font-preahvihear-sans">
                     {project.title}
                 </p>
-                <p className="text-sm sm:text-base tracking-tight lg:text-xl font-preahvihear-sans">
+                <p className="text-sm sm:text-base ">
                     {project.description}
                 </p>
             </div>
             <div className='flex gap-2'>
-                <Button variant='link' className='cursor-pointer'>
+                <Link className={cn('cursor-pointer', buttonVariants({ variant: "link" }))} href={`/admin/dashboard/projects/edit/${project._id}`}>
                     <PencilLine /> Edit
-                </Button>
+                </Link>
                 <DeleteDialog project={project} />
             </div>
         </div>

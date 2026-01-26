@@ -9,11 +9,11 @@ const fileOrUrl = z.union([
 export const formSchema = z.object({
     title: z.string().nonempty("Project Title is required"),
     description: z.string().nonempty("Project Title is required"),
-    technology: z.array(z.string()).min(0, "Technologies must be defined"),
+    technologies: z.array(z.string()).min(0, "Technologies must be defined"),
     project_image: fileOrUrl,
     project_video: fileOrUrl,
     live_url: z.string().nonempty("Please add a live URL of your Project"),
-    git_hub: z.string().optional()
+    git_hub: z.string().optional().nullable()
 }).superRefine((v, ctx) => {
     if (!v.project_video && !v.project_image) {
         ctx.addIssue({

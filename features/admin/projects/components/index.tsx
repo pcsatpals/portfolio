@@ -38,7 +38,7 @@ export default function AddEditProjectForm({ editProject }: { editProject?: Proj
         defaultValues: editProject ? editProject : {
             title: "",
             description: "",
-            technology: []
+            technologies: []
         },
     });
     const router = useRouter()
@@ -62,7 +62,7 @@ export default function AddEditProjectForm({ editProject }: { editProject?: Proj
         if (data.git_hub) formData.append("git_hub", data.git_hub);
 
         // Handle Array of technologies
-        data.technology?.forEach((tech) => formData.append("technologies[]", tech));
+        data.technologies?.forEach((tech) => formData.append("technologies[]", tech));
 
         // Handle Files (Only append if they are actual File objects)
         if (data.project_image instanceof File) {
@@ -92,7 +92,7 @@ export default function AddEditProjectForm({ editProject }: { editProject?: Proj
             pending: isEditing ? "Updating project..." : "Creating project...",
             success: {
                 render({ data }) {
-                    router.push("/dashboard")
+                    router.push("/admin/dashboard")
                     // Optional: Redirect or refresh data here
                     return `${data.message} 👌`;
                 },
@@ -210,6 +210,7 @@ export default function AddEditProjectForm({ editProject }: { editProject?: Proj
                                     </FieldLabel>
                                     <Input
                                         {...field}
+                                        value={field.value || ""}
                                         id="form-rhf-demo-title"
                                         aria-invalid={fieldState.invalid}
                                         placeholder="www.github/your-profile/repo-name..."
@@ -223,7 +224,7 @@ export default function AddEditProjectForm({ editProject }: { editProject?: Proj
                         />
 
                         <Controller
-                            name="technology"
+                            name="technologies"
                             control={form.control}
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>

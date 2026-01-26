@@ -38,7 +38,7 @@ export const uploadOnCloudinary = async (
         return res;
     } catch (err) {
         console.error("Cloudinary upload failed:", err);
-        return null;
+        throw new Error("Cloudinary upload failed")
     }
 };
 
