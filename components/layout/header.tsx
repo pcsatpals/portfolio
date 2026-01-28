@@ -52,7 +52,7 @@ const Header = () => {
     }, [open]);
 
     return (
-        <header className="body-font h-18 xl:h-22 bg-header/40 backdrop-blur-sm sticky top-0 z-[999] border-b border-white/10">
+        <header className="body-font h-18 xl:h-22 bg-white/05 backdrop-blur-sm sticky top-0 z-[999] border-b border-white/10">
             <div className="mx-auto max-w-6xl px-6 sm:px-10 xl:px-0 flex h-full flex-row items-center justify-between w-full">
                 <Link href="/" className="flex title-font font-medium items-center md:mb-0 [&_svg]:size-10 h-full">
                     <Logo />

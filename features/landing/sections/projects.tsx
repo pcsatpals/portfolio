@@ -80,7 +80,7 @@ const Projects = ({ showAll = false }: { showAll?: boolean }) => {
                     href="/projects"
                     className="text-center bg-header border border-white/10 w-fit text-sm mx-auto px-4 sm:px-8 py-2 sm:py-3 rounded-full backdrop-blur-3xl hover:opacity-90 hover:text-white/80 font-preahvihear-sans"
                 >
-                    Show All
+                    See All
                 </Link>
             }
         </div>
@@ -95,7 +95,7 @@ type ProjectCardProps = {
 
 const ProjectCard = ({ project, isEven, showFeatureHeading }: ProjectCardProps) => (
     <div
-        className={`flex items-center ${isEven ? "lg:flex-row-reverse" : "lg:flex-row"} flex-col `}
+        className={`flex items-center ${isEven ? "lg:flex-row-reverse" : "lg:flex-row"} flex-col border-b border-white/15 py-6 lg:py-0 lg:border-none`}
         key={project._id}>
         <motion.div
             initial={{ x: isEven ? "10%" : "-10%", opacity: 0 }}
