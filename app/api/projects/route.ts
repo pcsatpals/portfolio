@@ -7,37 +7,55 @@ export const dynamic = "force-dynamic"
 
 export async function POST(req: Request) {
     try {
-        await connectDB()
+        await connectDB();
 
-        const formData = await req.formData()
+        const formData = await req.formData();
 
-        const title = formData.get("title") as string
-        const description = formData.get("description") as string
-        const live_url = formData.get("live_url") as string
-        const git_hub = formData.get("git_hub") as string | undefined
-        const technologies = formData.getAll("technologies[]") as string[]
+        const title = formData.get("title") as string;
+        const description = formData.get("description") as string;
+        const live_url = formData.get("live_url") as string;
+        const git_hub = formData.get("git_hub") as string | undefined;
+        const technologies = formData.getAll("technologies[]") as string[];
+        const long_description = formData.get("long_description") as string | undefined;
+        const key_features = formData.get("key_features") as string | undefined;
 
-        const imageFile = formData.get("project_image") as File | null
-        const videoFile = formData.get("project_video") as File | null
+        const imageFile = formData.get("project_image") as File | null;
+        const videoFile = formData.get("project_video") as File | null;
 
-        if (!title || !description || !live_url || !imageFile && !videoFile) {
+        // 🔥 Other Images (FILES ONLY on POST)
+        const otherImageFiles = formData.getAll("other_images[]") as File[];
+
+        if (!title || !description || !live_url) {
             return NextResponse.json(
                 { message: "Missing required fields" },
                 { status: 400 }
-            )
+            );
         }
 
         let project_image: string | undefined;
         let project_video: string | undefined;
+        const other_images: string[] = [];
 
-        if (imageFile) {
+        // ===== Main Image =====
+        if (imageFile instanceof File) {
             const res = await uploadOnCloudinary(imageFile, "projects/images");
             project_image = res?.secure_url;
         }
 
-        if (videoFile) {
+        // ===== Video =====
+        if (videoFile instanceof File) {
             const res = await uploadOnCloudinary(videoFile, "projects/videos");
             project_video = res?.secure_url;
+        }
+
+        // ===== 🔥 Upload Other Images =====
+        for (const file of otherImageFiles) {
+            if (file instanceof File) {
+                const res = await uploadOnCloudinary(file, "projects/other-images");
+                if (res?.secure_url) {
+                    other_images.push(res.secure_url);
+                }
+            }
         }
 
         const project = await Project.create({
@@ -48,18 +66,21 @@ export async function POST(req: Request) {
             technologies,
             project_image,
             project_video,
-        })
+            other_images,
+            key_features,
+            long_description,
+        });
 
         return NextResponse.json(
             { message: "Project created successfully", project },
             { status: 201 }
-        )
+        );
     } catch (err) {
-        console.error(err)
+        console.error("POST Error:", err);
         return NextResponse.json(
             { message: "Internal server error" },
             { status: 500 }
-        )
+        );
     }
 }
 
@@ -72,59 +93,91 @@ export async function PUT(req: NextRequest) {
         const id = searchParams.get("id");
 
         if (!id) {
-            return NextResponse.json({ message: "Project ID is required" }, { status: 400 });
+            return NextResponse.json(
+                { message: "Project ID is required" },
+                { status: 400 }
+            );
         }
 
         const formData = await req.formData();
 
-        // 1. Find the existing project first
         const existingProject = await Project.findById(id);
         if (!existingProject) {
-            return NextResponse.json({ message: "Project not found" }, { status: 404 });
+            return NextResponse.json(
+                { message: "Project not found" },
+                { status: 404 }
+            );
         }
 
-        // 2. Extract text fields
+        // ===== Text Fields =====
         const title = formData.get("title") as string;
         const description = formData.get("description") as string;
         const live_url = formData.get("live_url") as string;
         const git_hub = formData.get("git_hub") as string | undefined;
         const technologies = formData.getAll("technologies[]") as string[];
-
-        // 3. Handle Files (Image/Video)
-        // Note: formData.get returns a File object if a new one is uploaded, 
-        // or a string (the existing URL) if no new file was selected.
+        const long_description = formData.get("long_description") as string | undefined;
+        const key_features = formData.get("key_features") as string | undefined;
+        // ===== Main Image / Video =====
         const imageInput = formData.get("project_image");
         const videoInput = formData.get("project_video");
 
-        let project_image: undefined | string = existingProject.project_image;
-        let project_video: undefined | string = existingProject.project_video;
+        let project_image = existingProject.project_image;
+        let project_video = existingProject.project_video;
 
-        // If it's a File object, a new file was uploaded -> Upload to Cloudinary
         if (imageInput instanceof File) {
             const res = await uploadOnCloudinary(imageInput, "projects/images");
-            project_image = res?.secure_url;
+            project_image = res?.secure_url || "";
         }
-        // If imageInput is null/empty string and you want to allow deletion:
-        // else if (!imageInput) { project_image = undefined; }
 
         if (videoInput instanceof File) {
             const res = await uploadOnCloudinary(videoInput, "projects/videos");
-            project_video = res?.secure_url;
+            project_video = res?.secure_url || "";
         }
 
-        // 4. Update the document
+        // ===== 🔥 Other Images =====
+        const existingOtherImages =
+            formData.getAll("existed_images[]") as string[];
+
+        const newOtherImageFiles =
+            formData.getAll("other_images[]") as File[];
+
+        const uploadedOtherImages: string[] = [];
+        for (const file of newOtherImageFiles) {
+            if (file instanceof File) {
+                const res = await uploadOnCloudinary(file, "projects/other-images");
+                if (res?.secure_url) {
+                    uploadedOtherImages.push(res.secure_url);
+                }
+            }
+        }
+
+        // ✅ Final images = kept + newly uploaded
+        const other_images = [
+            ...existingOtherImages,
+            ...uploadedOtherImages,
+        ];
+        console.log(uploadedOtherImages, other_images, newOtherImageFiles)
+
         const updatedProject = await Project.findByIdAndUpdate(
             id,
             {
-                title: title || existingProject.title,
-                description: description || existingProject.description,
-                live_url: live_url || existingProject.live_url,
-                git_hub,
-                technologies: technologies.length > 0 ? technologies : existingProject.technologies,
-                project_image,
-                project_video,
+                $set: {
+                    title: title || existingProject.title,
+                    description: description || existingProject.description,
+                    live_url: live_url || existingProject.live_url,
+                    git_hub,
+                    key_features,
+                    long_description,
+                    technologies:
+                        technologies.length > 0
+                            ? technologies
+                            : existingProject.technologies,
+                    project_image,
+                    project_video,
+                    other_images,
+                }
             },
-            { new: true } // returns the updated document
+            { new: true, runValidators: true }
         );
 
         return NextResponse.json(
@@ -139,6 +192,7 @@ export async function PUT(req: NextRequest) {
         );
     }
 }
+
 
 
 export async function DELETE(req: NextRequest) {
