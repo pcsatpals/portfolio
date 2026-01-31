@@ -17,7 +17,7 @@ import z from 'zod';
 const ContactMe = () => {
 
     return (
-        <div className='w-full grid grid-cols-1 sm:grid-cols-2 gap-0 lg:gap-6 py-16'>
+        <div className='w-full grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6 py-16'>
             <div className=" body-font flex flex-col  mx-auto max-w-6xl font-preahvihear-sans px-6 sm:px-10 xl:px-0 my-auto text-center sm:text-left ">
                 <p className="text-3xl sm:text-4xl">Contact</p>
                 <p className='text-sm text-muted-foreground mt-1'>Email, call or Complete the form.</p>
