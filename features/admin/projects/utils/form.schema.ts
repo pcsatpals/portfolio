@@ -4,16 +4,19 @@ import * as z from "zod"
 const fileOrUrl = z.union([
     z.instanceof(File),
     z.string().url()
-]).optional().nullable();
+]);
 
 export const formSchema = z.object({
     title: z.string().nonempty("Project Title is required"),
     description: z.string().nonempty("Project Title is required"),
     technologies: z.array(z.string()).min(0, "Technologies must be defined"),
-    project_image: fileOrUrl,
-    project_video: fileOrUrl,
+    project_image: fileOrUrl.optional().nullable(),
+    project_video: fileOrUrl.optional().nullable(),
     live_url: z.string().nonempty("Please add a live URL of your Project"),
-    git_hub: z.string().optional().nullable()
+    git_hub: z.string().optional().nullable(),
+    long_description: z.string().optional().nullable(),
+    key_features: z.string().optional().nullable(),
+    other_images: z.array(fileOrUrl).optional()
 }).superRefine((v, ctx) => {
     if (!v.project_video && !v.project_image) {
         ctx.addIssue({

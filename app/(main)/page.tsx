@@ -1,4 +1,4 @@
-import { CTA, Hero, Projects, WorkExperience } from "@/features/landing";
+import { ContactMe, CTA, Hero, Projects, WorkExperience } from "@/features/landing";
 
 export default function Home() {
   return (
@@ -7,6 +7,7 @@ export default function Home() {
       <WorkExperience />
       <CTA />
       <Projects />
+      <ContactMe />
     </main>
   );
 }

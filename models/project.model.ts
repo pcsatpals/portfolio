@@ -4,10 +4,13 @@ import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 export interface Project {
     title: string;
     description: string;
+    long_description?: string | null;
+    key_features?: string | null;
     project_image: string;
     project_video: string;
     position: number;
     technologies: string[];
+    other_images: string[];
     live_url: string;
     git_hub?: string;
     createdAt?: Date;
@@ -35,17 +38,27 @@ const projectSchema = new Schema<Project>(
         technologies: {
             type: [String],
             default: [],
-
         },
         live_url: {
             type: String
         },
         git_hub: {
             type: String
+        },
+        long_description: {
+            type: String,
+        },
+        key_features: {
+            type: String,
+        },
+        other_images: {
+            type: [String],
+            default: [],
         }
     },
     {
-        timestamps: true
+        timestamps: true,
+        strict: false
     }
 )
 

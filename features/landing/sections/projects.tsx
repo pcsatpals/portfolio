@@ -102,7 +102,7 @@ const ProjectCard = ({ project, isEven, showFeatureHeading }: ProjectCardProps) 
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className={`relative z-10 flex flex-col ${isEven ? "items-end" : ""} overflow-visible gap-3 sm:gap-5 lg:w-1/2 shrink-0 lg:p-6`}>
+            className={`relative z-10 flex flex-col ${isEven ? "lg:items-end" : ""} overflow-visible gap-3 sm:gap-5 lg:w-1/2 shrink-0 lg:p-6`}>
             <span>
                 {showFeatureHeading &&
                     <p className="text-lg sm:text-2xl mb-2 font-jakarta-sans text-primary font-semibold">
@@ -115,11 +115,11 @@ const ProjectCard = ({ project, isEven, showFeatureHeading }: ProjectCardProps) 
             </span>
             <div
                 className="bg-linear-to-br from-white/5 to-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6  border border-white/10 shadow-lg  w-full lg:w-[calc(100%+15%)] ">
-                <p className="line-clamp-5">
+                {project.description == "empty" ? <div dangerouslySetInnerHTML={{ __html: project?.long_description || "" }} /> : <p className="line-clamp-5">
                     {project.description}
-                </p>
+                </p>}
             </div>
-            <div className="flex gap-4 sm:p-3 sm:py-1">
+            <div className="flex gap-4 pb-2 sm:p-3 sm:pt-0 sm:py-4">
                 <Link
                     href={project.live_url}
                     target="_blank"
@@ -139,17 +139,19 @@ const ProjectCard = ({ project, isEven, showFeatureHeading }: ProjectCardProps) 
                     background: 'radial-gradient(circle, #763CAC50 0%, rgba(50, 15, 133, 0) 65%)',
                 }} />
         </motion.div>
-        <MotionImage
-            initial={{ x: isEven ? "-10%" : "10%", opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
-            src={project.project_image || ""}
-            height={1600}
-            width={1600}
-            className="w-full lg:w-1/2 shrink-0 aspect-4/3 h-full object-contain"
-            alt={project.title}
-        />
+        <Link href={`/projects/${project._id}`} className="w-full lg:w-1/2  h-full shrink-0">
+            <MotionImage
+                initial={{ x: isEven ? "-10%" : "10%", opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
+                src={project.project_image || ""}
+                height={1600}
+                width={1600}
+                className="aspect-4/3 h-full rounded-xl shadow-2xl object-cover"
+                alt={project.title}
+            />
+        </Link>
     </div>
 )
 
