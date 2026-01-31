@@ -79,9 +79,8 @@ const Hero = () => (
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.93, ease: "easeIn" }}
             className='text-center sm:text-left sm:text-[22px] w-full mt-25 xl:max-w-[80%] px-6 sm:px-10 xl:px-0'>
-            A self-taught software developer, working in the industry for 3+ years.
-            I build reliable and scalable digital solutions that strike the right balance
-            between performance, maintainability, and business goals.
+            Software developer with 3+ years of experience building
+            scalable digital solutions that balance performance with business goals
         </motion.p>
 
     </div>

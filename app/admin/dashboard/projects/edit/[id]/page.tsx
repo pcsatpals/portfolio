@@ -15,7 +15,7 @@ const EditProjectPage = async ({ params }: { params: Promise<{ id: string }> }) 
         redirect("/admin/dashboard");
     }
     const serializedProject = JSON.parse(JSON.stringify(project));
-    console.log(serializedProject)
+
     return (
         <AddEditProjectForm editProject={serializedProject} />
     )

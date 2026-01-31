@@ -13,6 +13,9 @@ export interface Project {
     live_url: string;
     git_hub?: string;
 
+    long_description?: string;
+    key_features: string;
+
     createdAt: Date;
     updatedAt: Date;
 }

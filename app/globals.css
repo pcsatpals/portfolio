@@ -130,6 +130,10 @@
 
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -201,4 +205,8 @@
     font-size: 14px;
   }
 
+}
+
+.no-tailwind {
+  all: revert; /* or unset */
 }
