@@ -157,11 +157,11 @@ const ProjectCard = ({ project, isEven, showFeatureHeading }: ProjectCardProps) 
 
 const ProjectSkeleton = ({ isEven = false }: { isEven?: boolean }) => (
     <div
-        className={`flex items-center ${isEven ? "sm:flex-row-reverse" : "sm:flex-row"} flex-col `}
+        className={`flex items-center ${isEven ? "lg:flex-row-reverse" : "lg:flex-row"} flex-col  gap-3`}
     >
-        <div className={`relative flex flex-col ${isEven ? "items-end" : ""} overflow-visible gap-3 sm:gap-5 sm:w-1/2 shrink-0 p-6`}>
+        <div className={`relative z-10 flex flex-col ${isEven ? "lg:items-end" : ""} overflow-visible gap-3 sm:gap-5 w-full lg:w-1/2 shrink-0 lg:p-6`}>
             {!isEven &&
-                <Skeleton className=" w-75 h-10 -mb-3" />
+                <Skeleton className=" w-75 h-10 -mb-1" />
             }
             <Skeleton className="mb-2 w-[80%] ml-0 h-12" />
             <Skeleton className="w-full h-20 lg:w-[calc(100%+15%)] " />

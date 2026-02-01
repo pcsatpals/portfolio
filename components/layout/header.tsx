@@ -76,13 +76,13 @@ const Header = () => {
                             className={`hover:text-foreground/80 group text-sm xl:text-base relative text-nowrap ${(ix == 0 ? pathname == "/" : pathname.includes(item.link)) ? "text-white" : "text-white/75"}`}
                         >
                             {item.label}
-                            <span className='w-0 absolute transition-all left-0 h-0.5 group-hover:w-full delay-200 group-hover:delay-0 bg-card bottom-0'></span>
-                            <span className='w-0 delay-0 absolute transition-all left-0 h-px group-hover:w-[80%] group-hover:delay-200 bg-card -bottom-0.5'></span>
+                            <span className='w-0 absolute transition-all -bottom-1 left-0 h-1 group-hover:w-[calc(100%+10px)] delay-200 group-hover:delay-0 bg-primary rounded-full'></span>
+                            <span className='w-0 delay-0 absolute transition-all left-0 h-0.5 group-hover:w-[80%] group-hover:delay-200 bg-primary -bottom-2'></span>
 
                         </Link>
                     ))}
                     <Link href="cv.pdf" download="satpal_singh-software_developer.pdf" className="w-full lg:w-fit">
-                        <Button className="rounded-full border bg-primary/50 lg:!bg-transparent border-white/20 [&_svg]:size-2 relative group overflow-hidden w-full lg:w-fit">
+                        <Button className="rounded-full border  !bg-white text-black border-white/20 hover:border-primary hover:text-white [&_svg]:size-2 relative group overflow-hidden w-full sm:w-fit">
                             <span className="relative z-10  flex gap-1 items-center">
                                 Resume
                                 <MoveUpRight />
