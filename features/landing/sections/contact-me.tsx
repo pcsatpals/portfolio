@@ -1,44 +1,50 @@
 "use client";
 
 import FormFieldWrapper from '@/components/common/form-field-wrapper';
+import { ParticleGlobe } from '@/components/common/globe.model';
 import StarBorder from '@/components/layout/star-border';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FieldGroup } from '@/components/ui/field';
 import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Mail, PhoneCall } from 'lucide-react'
+import { Mail, MoveUpRight, PhoneCall } from 'lucide-react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import z from 'zod';
 
-const ContactMe = () => {
-
+const ContactMe = ({ showContact = false }: { showContact?: boolean }) => {
     return (
         <div className='w-full grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6 py-16'>
-            <div className=" body-font flex flex-col  mx-auto max-w-6xl font-preahvihear-sans px-6 sm:px-10 xl:px-0 my-auto text-center sm:text-left ">
-                <p className="text-3xl sm:text-4xl">Contact</p>
-                <p className='text-sm text-muted-foreground mt-1'>Email, call or Complete the form.</p>
-                <div className="flex flex-col items-center sm:items-start  max-w-175.75 sm:text-lg text-sm mt-6">
-                    <p className='mt-3'>Let’s turn your concept into a successful commercial product together!</p>
-                    <Link target="_blank" href="mailto:pcsatpals@gmail.com" className="hover:underline font-light text-sm mt-3 lg:mt-6 flex gap-2 [&_svg]:size-4 items-center">
-                        <Mail />
-                        pcsatpals@gmail.com
-                    </Link>
-                    <Link target="_blank" href="tel:+917814104770" className="hover:underline font-light text-sm mt-3 lg:mt-6 flex gap-2 [&_svg]:size-4 items-center">
-                        <PhoneCall />
-                        78141-04770
-                    </Link>
-                </div>
-            </div >
+            {showContact ? <ContactSection /> : <GlobeSection />}
             <ContactMeForm />
         </div>
     )
 }
 
 export default ContactMe
+
+
+const ContactSection = () => (
+    <div className=" body-font flex flex-col mx-auto max-w-6xl font-preahvihear-sans px-6 sm:px-10 xl:px-0 my-auto text-center sm:text-left ">
+        <p className="text-3xl sm:text-4xl">Contact</p>
+        <p className='text-sm text-muted-foreground mt-1'>Email, call or Complete the form.</p>
+        <div className="flex flex-col items-center sm:items-start  max-w-175.75 sm:text-lg text-sm mt-6">
+            <p className='mt-3'>Let’s turn your concept into a successful commercial product together!</p>
+            <Link target="_blank" href="mailto:pcsatpals@gmail.com" className="hover:underline font-light text-sm mt-3 lg:mt-6 flex gap-2 [&_svg]:size-4 items-center">
+                <Mail />
+                pcsatpals@gmail.com
+            </Link>
+            <Link target="_blank" href="tel:+917814104770" className="hover:underline font-light text-sm mt-3 lg:mt-6 flex gap-2 [&_svg]:size-4 items-center">
+                <PhoneCall />
+                78141-04770
+            </Link>
+        </div>
+    </div >
+)
 
 
 const formSchema = z.object({
@@ -140,9 +146,35 @@ const ContactMeForm = () => {
                     </Form>
                 </CardContent>
             </Card>
-            <div className="border-100 lg:border-200 border-transparent border-b-primary max-w-screen -z-10 blur-3xl absolute bottom-0  left-1/2 -translate-x-1/2" />
+            <div className=" border-100 lg:border-200 border-transparent border-b-primary max-w-screen -z-10 blur-3xl absolute bottom-0  left-1/2 -translate-x-1/2" />
 
         </div>
     )
 }
 
+
+
+type GlobeSectionProps = {
+    /** Optional height (Tailwind or plain CSS) */
+    className?: string
+}
+
+export function GlobeSection({ className }: GlobeSectionProps) {
+    return (
+        <div className='flex flex-col gap-2 items-center h-full'>
+            <div className={className ?? 'relative lg:h-100 h-80 w-full'}>
+                <ParticleGlobe />
+            </div>
+            <p className="text-muted-foreground md:text-base lg:text-sm text-xs sm:max-w-full -mt-3">Let’s turn your concept into a successful commercial product together!</p>
+            <Link href="/contact-me" className="w-fit">
+                <Button className="rounded-full border  !bg-white text-black border-white/20 hover:border-primary hover:text-white [&_svg]:size-2 relative group overflow-hidden w-fit">
+                    <span className="relative z-10  flex gap-1 items-center">
+                        Contact Me
+                        <MoveUpRight />
+                    </span>
+                    <div className="absolute top-0 translate-y-full h-full w-full rounded-full group-hover:translate-y-0 transition-all duration-500 bg-primary"></div>
+                </Button>
+            </Link>
+        </div>
+    )
+}
