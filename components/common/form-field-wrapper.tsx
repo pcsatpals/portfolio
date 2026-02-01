@@ -2,12 +2,15 @@ import { Control, FieldValues, Path } from "react-hook-form";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 
 
+type InputLikeProps = React.InputHTMLAttributes<HTMLInputElement> &
+    React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+
 type FormFieldWrapperProps<T extends FieldValues> = {
     control: Control<T>;
     name: Path<T>;
     label?: string;
     placeholder?: string;
-    component: React.ElementType;
+    component: React.ComponentType<InputLikeProps>;
     className?: string;
     required?: boolean;
     type?: string;
