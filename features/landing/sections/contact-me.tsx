@@ -18,7 +18,7 @@ import z from 'zod';
 
 const ContactMe = ({ showContact = false }: { showContact?: boolean }) => {
     return (
-        <div className='w-full grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6 py-16'>
+        <div className='w-full grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-6 py-16'>
             {showContact ? <ContactSection /> : <GlobeSection />}
             <ContactMeForm />
         </div>
@@ -165,8 +165,8 @@ export function GlobeSection({ className }: GlobeSectionProps) {
             <div className={className ?? 'relative lg:h-100 h-80 w-full'}>
                 <ParticleGlobe />
             </div>
-            <p className="text-muted-foreground md:text-base lg:text-sm text-xs sm:max-w-full -mt-3">Let’s turn your concept into a successful commercial product together!</p>
-            <Link href="/contact-me" className="w-fit">
+            <p className="text-muted-foreground md:text-base max-w-full px-6 text-center lg:text-sm text-xs sm:max-w-full -mt-3">Let’s turn your concept into a successful commercial product together!</p>
+            <Link href="/contact-me" className="w-fit mt-2">
                 <Button className="rounded-full border  !bg-white text-black border-white/20 hover:border-primary hover:text-white [&_svg]:size-2 relative group overflow-hidden w-fit">
                     <span className="relative z-10  flex gap-1 items-center">
                         Contact Me

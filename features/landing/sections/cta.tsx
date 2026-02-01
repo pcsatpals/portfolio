@@ -21,7 +21,7 @@ const CTA = () => (
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.93, ease: "easeIn" }}
-            className='sm:[&_svg]:h-126 [&_svg]:w-full px-4 xl:[&_svg]:h-164'>
+            className='[&_svg]:h-70 sm:[&_svg]:h-126 [&_svg]:w-full px-4 xl:[&_svg]:h-164'>
             <TechSVG />
         </motion.div>
     </div>
