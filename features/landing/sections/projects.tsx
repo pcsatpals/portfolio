@@ -78,7 +78,7 @@ const Projects = ({ showAll = false }: { showAll?: boolean }) => {
             </div> :
                 <Link
                     href="/projects"
-                    className="text-center bg-header border border-white/10 w-fit text-sm mx-auto px-4 sm:px-8 py-2 sm:py-3 rounded-full backdrop-blur-3xl hover:opacity-90 hover:text-white/80 font-preahvihear-sans"
+                    className="text-center bg-header border border-white/10 w-fit text-sm mx-auto px-4 sm:px-8 py-2 sm:py-3 rounded-full backdrop-blur-3xl hover:opacity-90 hover:text-white/80 font-preahvihear-sans glass-button"
                 >
                     See All
                 </Link>
@@ -114,7 +114,7 @@ const ProjectCard = ({ project, isEven, showFeatureHeading }: ProjectCardProps) 
                 </p>
             </span>
             <div
-                className="bg-linear-to-br from-white/5 to-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6  border border-white/10 shadow-lg  w-full lg:w-[calc(100%+15%)] ">
+                className="bg-linear-to-br from-white/5 to-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6  border border-white/10 shadow-lg  w-full lg:w-[calc(100%+15%)] glass-card">
                 {project.description == "empty" ? <div dangerouslySetInnerHTML={{ __html: project?.long_description || "" }} /> : <p className="line-clamp-5">
                     {project.description}
                 </p>}

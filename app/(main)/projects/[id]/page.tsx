@@ -1,6 +1,9 @@
+import { Button } from '@/components/ui/button';
 import { connectDB } from '@/lib/mongodb';
 import { Project } from '@/models/project.model';
+import { Github, Globe } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 const ProjectDetailPage = async ({ params }: { params: Promise<{ id: string }> }) => {
@@ -25,6 +28,18 @@ const ProjectDetailPage = async ({ params }: { params: Promise<{ id: string }> }
                 height={1000}
                 width={2000}
             />
+            <div className="flex w-full gap-2">
+                <Button className='rounded-full glass-button'>
+                    <Link href={project.live_url} target="_blank" className='flex items-center gap-2 '>
+                        <Globe /> Live Preview
+                    </Link>
+                </Button>
+                {project.git_hub && <Button className='rounded-full'>
+                    <Link href={project.git_hub} target="_blank" className='flex items-center gap-2'>
+                        <Github /> Github
+                    </Link>
+                </Button>}
+            </div>
             {project.long_description && <div className="text-sm lg:text-lg no-tailwind" dangerouslySetInnerHTML={{ __html: project.long_description }} />}
             {project.other_images.map((item, ix) => (
                 <Image
