@@ -54,7 +54,7 @@ const Header = () => {
     }, [open]);
     console.log(pathname)
     return (
-        <header className="body-font h-18 xl:h-22 bg-white/05 backdrop-blur-sm sticky top-0 z-999 border-b border-white/10">
+        <header className="body-font h-18 xl:h-22 backdrop-blur-sm sticky top-0 z-999 border-b glass-card border-white/10">
             <div className="mx-auto max-w-6xl px-6 sm:px-10 xl:px-0 flex h-full flex-row items-center justify-between w-full">
                 <Link href="/" className="flex title-font font-medium items-center md:mb-0 [&_svg]:size-10 h-full">
                     <Logo />
@@ -82,7 +82,7 @@ const Header = () => {
                         </Link>
                     ))}
                     <Link href="cv.pdf" download="satpal_singh-software_developer.pdf" className="w-full lg:w-fit">
-                        <Button className="rounded-full border  !bg-white text-black border-white/20 hover:border-primary hover:text-white [&_svg]:size-2 relative group overflow-hidden w-full sm:w-fit">
+                        <Button className="rounded-full border glass-button !bg-white text-black border-white/20 hover:border-primary hover:text-white [&_svg]:size-2 relative group overflow-hidden w-full sm:w-fit">
                             <span className="relative z-10  flex gap-1 items-center">
                                 Resume
                                 <MoveUpRight />

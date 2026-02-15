@@ -33,7 +33,7 @@ const Footer = () => {
 
     return (
         <footer className="relative">
-            <div className=" body-font border-t bg-white/05 backdrop-blur-2xl border-white/15 mt-10 flex flex-col gap-10 font-preahvihear-sans  pt-10 xl:px-0  text-center sm:text-left ">
+            <div className=" body-font border-t bg-white/05 backdrop-blur-2xl border-white/15 mt-10 flex flex-col gap-10 font-preahvihear-sans  pt-10 xl:px-0  text-center sm:text-left glass-button">
                 <div className="max-w-6xl mx-auto flex flex-col items-center gap-8">
                     <button className="flex flex-col gap-2 items-center" onClick={topFunction}>
                         <ChevronsUp className="animate-bounce" />

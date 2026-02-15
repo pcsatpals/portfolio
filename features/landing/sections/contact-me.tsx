@@ -95,9 +95,9 @@ const ContactMeForm = () => {
 
     return (
         <div className='w-full relative sm:ml-auto shrink-0 max-w-112.5 px-6 sm:px-10 xl:px-0'>
-            <Card className='h-fit my-auto bg-transparent border-white/10 shadow-xl shadow-primary/20'>
+            <Card className='h-fit my-auto !bg-transparent border-white/10 shadow-xl shadow-primary/20 glass-card'>
                 <CardHeader className='px-4 lg:px-6'>
-                    <CardTitle className='text-2xl text-white'>
+                    <CardTitle className='text-4xl text-white'>
                         Get in Touch
                     </CardTitle>
                     <CardDescription className='-mt-2'>
@@ -167,7 +167,7 @@ export function GlobeSection({ className }: GlobeSectionProps) {
             </div>
             <p className="text-muted-foreground md:text-base max-w-full px-6 text-center lg:text-sm text-xs sm:max-w-full -mt-3">Let’s turn your concept into a successful commercial product together!</p>
             <Link href="/contact-me" className="w-fit mt-2">
-                <Button className="rounded-full border  !bg-white text-black border-white/20 hover:border-primary hover:text-white [&_svg]:size-2 relative group overflow-hidden w-fit">
+                <Button className="rounded-full border  !bg-white text-black border-white/20 hover:border-primary hover:text-white [&_svg]:size-2 relative group overflow-hidden w-fit glass-button">
                     <span className="relative z-10  flex gap-1 items-center">
                         Contact Me
                         <MoveUpRight />
