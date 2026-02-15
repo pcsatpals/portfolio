@@ -1,58 +1,269 @@
 "use client"
 
-import { useRef } from "react"
-import { Canvas, useFrame, useLoader } from "@react-three/fiber"
-import { OrbitControls } from "@react-three/drei"
-import * as THREE from "three"
+import { useEffect, useRef, useState } from "react"
+import * as d3 from "d3"
+import landFeatures from "./globe.json"
 
-function EarthGlobe() {
-  const meshRef = useRef<THREE.Mesh>(null)
-  const groupRef = useRef<THREE.Group>(null)
-
-  const earthTexture = useLoader(THREE.TextureLoader, "/texture_earth-1.jpg")
-
-
-  useFrame((state, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y -= delta * 0.1
-    }
-  })
-
-  return (
-    <group ref={groupRef}>
-      <mesh ref={meshRef}>
-        <sphereGeometry args={[2, 64, 64]} />
-        <meshStandardMaterial
-          map={earthTexture}
-          roughness={0.8}
-          metalness={0.2}
-          emissive="#112244"
-          emissiveIntensity={0.2}
-        />
-      </mesh>
-    </group>
-  )
+interface RotatingEarthProps {
+  className?: string
 }
 
+export function ParticleGlobe({ className = "" }: RotatingEarthProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-export function ParticleGlobe() {
+  useEffect(() => {
+    if (!canvasRef.current || !containerRef.current) return
+
+    const canvas = canvasRef.current
+    const container = containerRef.current
+    const context = canvas.getContext("2d")
+    if (!context) return
+
+    let width = container.clientWidth
+    let height = container.clientHeight
+    let projection: d3.GeoProjection
+    let path: d3.GeoPath<any, d3.GeoPermissibleObjects>
+    let allDots: DotData[] = []
+    let rotation = [0, 0]
+    let autoRotate = true
+    let animationFrameId: number
+
+    // Function to initialize or update dimensions
+    const updateDimensions = () => {
+      width = container.clientWidth
+      height = container.clientHeight
+      const dpr = window.devicePixelRatio || 1
+
+      canvas.width = width * dpr
+      canvas.height = height * dpr
+      canvas.style.width = `${width}px`
+      canvas.style.height = `${height}px`
+      context.scale(dpr, dpr)
+
+      const radius = Math.min(width, height) / 2.2 // Adjusted to fit better
+
+      projection = d3
+        .geoOrthographic()
+        .scale(radius)
+        .translate([width / 2, height / 2])
+        .clipAngle(90)
+        .rotate(rotation as [number, number]) // Maintain current rotation
+
+      path = d3.geoPath().projection(projection).context(context)
+
+      // Re-render if data is loaded
+      if (landFeatures) render()
+    }
+
+    // Helper functions
+    const pointInPolygon = (point: [number, number], polygon: number[][]): boolean => {
+      const [x, y] = point
+      let inside = false
+      for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+        const [xi, yi] = polygon[i]
+        const [xj, yj] = polygon[j]
+        if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) {
+          inside = !inside
+        }
+      }
+      return inside
+    }
+
+    const pointInFeature = (point: [number, number], feature: any): boolean => {
+      const geometry = feature.geometry
+      if (geometry.type === "Polygon") {
+        const coordinates = geometry.coordinates
+        if (!pointInPolygon(point, coordinates[0])) return false
+        for (let i = 1; i < coordinates.length; i++) {
+          if (pointInPolygon(point, coordinates[i])) return false
+        }
+        return true
+      } else if (geometry.type === "MultiPolygon") {
+        for (const polygon of geometry.coordinates) {
+          if (pointInPolygon(point, polygon[0])) {
+            let inHole = false
+            for (let i = 1; i < polygon.length; i++) {
+              if (pointInPolygon(point, polygon[i])) {
+                inHole = true
+                break
+              }
+            }
+            if (!inHole) return true
+          }
+        }
+        return false
+      }
+      return false
+    }
+
+    const generateDotsInPolygon = (feature: any, dotSpacing = 16) => {
+      const dots: [number, number][] = []
+      const bounds = d3.geoBounds(feature)
+      const [[minLng, minLat], [maxLng, maxLat]] = bounds
+      const stepSize = dotSpacing * 0.08
+
+      for (let lng = minLng; lng <= maxLng; lng += stepSize) {
+        for (let lat = minLat; lat <= maxLat; lat += stepSize) {
+          const point: [number, number] = [lng, lat]
+          if (pointInFeature(point, feature)) {
+            dots.push(point)
+          }
+        }
+      }
+      return dots
+    }
+
+    interface DotData {
+      lng: number
+      lat: number
+      visible: boolean
+    }
+
+    const render = () => {
+      if (!context || !path) return; // Guard clause
+
+      context.clearRect(0, 0, width, height)
+
+      // Ensure projection is initialized before using it
+      if (!projection) return;
+
+      const currentScale = projection.scale()
+      // Draw ocean
+      context.beginPath()
+      context.arc(width / 2, height / 2, currentScale, 0, 2 * Math.PI)
+      context.fillStyle = "#00000000" // Transparent ocean for better blending? Or black as requested?
+      context.fillStyle = "rgba(0,0,0,0.4)" // Semi-transparent black
+      context.fill()
+
+      if (landFeatures) {
+        // Draw graticule
+        const graticule = d3.geoGraticule()
+        context.beginPath()
+        path(graticule())
+        context.strokeStyle = "rgba(255,255,255,0.2)"
+        context.lineWidth = 1
+        context.stroke()
+
+        // Draw land outlines
+        context.beginPath()
+        landFeatures.features.forEach((feature: any) => {
+          path(feature)
+        })
+        context.strokeStyle = "rgba(255,255,255,0.8)"
+        context.lineWidth = 1
+        context.stroke()
+
+        // Draw dots
+        context.fillStyle = "rgba(255,255,255,0.6)"
+        allDots.forEach((dot) => {
+          const projected = projection([dot.lng, dot.lat])
+          if (projected && projected[0] >= 0 && projected[0] <= width && projected[1] >= 0 && projected[1] <= height) {
+
+            context.beginPath()
+            context.arc(projected[0], projected[1], 1.2, 0, 2 * Math.PI)
+            context.fill()
+          }
+        })
+      }
+    }
+
+    const loadWorldData = async () => {
+      try {
+        setIsLoading(true)
+        // Generate dots
+        let totalDots = 0
+        landFeatures.features.forEach((feature: any) => {
+          const dots = generateDotsInPolygon(feature, 16) // Adjust spacing for density
+          dots.forEach(([lng, lat]) => {
+            allDots.push({ lng, lat, visible: true })
+            totalDots++
+          })
+        })
+
+        updateDimensions(); // Ensure correct setup
+        // render() // updateDimensions calls render
+        setIsLoading(false)
+        startRotation();
+      } catch (err) {
+        setError("Failed")
+        setIsLoading(false)
+      }
+    }
+
+    const rotate = () => {
+      if (autoRotate && projection) {
+        rotation[0] += 0.5
+        projection.rotate(rotation as [number, number])
+        render()
+      }
+      animationFrameId = requestAnimationFrame(rotate)
+    }
+
+    const startRotation = () => {
+      cancelAnimationFrame(animationFrameId)
+      rotate()
+    }
+
+    // Resize Observer
+    const resizeObserver = new ResizeObserver(() => {
+      updateDimensions()
+    })
+    resizeObserver.observe(container)
+
+    // Interaction
+    const handleMouseDown = (event: MouseEvent) => {
+      autoRotate = false
+      const startX = event.clientX
+      const startY = event.clientY
+      const startRotation = [...rotation]
+
+      const handleMouseMove = (moveEvent: MouseEvent) => {
+        const sensitivity = 0.5
+        const dx = moveEvent.clientX - startX
+        const dy = moveEvent.clientY - startY
+        rotation[0] = startRotation[0] + dx * sensitivity
+        rotation[1] = startRotation[1] - dy * sensitivity
+        rotation[1] = Math.max(-90, Math.min(90, rotation[1]))
+
+        if (projection) {
+          projection.rotate(rotation as [number, number])
+          render()
+        }
+      }
+
+      const handleMouseUp = () => {
+        document.removeEventListener("mousemove", handleMouseMove)
+        document.removeEventListener("mouseup", handleMouseUp)
+        setTimeout(() => { autoRotate = true }, 2000)
+      }
+
+      document.addEventListener("mousemove", handleMouseMove)
+      document.addEventListener("mouseup", handleMouseUp)
+    }
+
+    canvas.addEventListener("mousedown", handleMouseDown)
+
+    loadWorldData()
+
+    return () => {
+      cancelAnimationFrame(animationFrameId)
+      resizeObserver.disconnect()
+      canvas.removeEventListener("mousedown", handleMouseDown)
+    }
+  }, []) // Empty dependency array as we use refs and resize observer
+
+  if (error) return null;
+
   return (
-    <div className="w-full h-full relative">
-      <Canvas
-        camera={{ position: [0, 0, 6], fov: 50 }}
-        className="bg-transparent"
-      >
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[100, 100, 100]} intensity={3} />
-        <pointLight position={[-5, -3, -5]} intensity={0.4} color="#4a90e2" />
-
-
-        {/* Earth with particles */}
-        <EarthGlobe />
-
-        {/* Interactive controls */}
-        <OrbitControls enableZoom={false} enablePan={false} minDistance={3.5} maxDistance={10} autoRotate={false} />
-      </Canvas>
+    <div ref={containerRef} className={`relative w-full h-full flex items-center justify-center ${className}`}>
+      <canvas
+        ref={canvasRef}
+        className="cursor-move"
+        style={{ display: 'block' }}
+      />
     </div>
   )
 }

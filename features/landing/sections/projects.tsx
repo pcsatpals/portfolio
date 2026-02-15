@@ -134,7 +134,7 @@ const ProjectCard = ({ project, isEven, showFeatureHeading }: ProjectCardProps) 
                     <Github />
                 </Link>}
             </div>
-            <div className={`h-full absolute w-full top-0 rounded-full ${isEven ? "right-0" : "left-0"}`}
+            <div className={`h-full absolute w-[calc(50%+15%)] top-0 rounded-full ${isEven ? "right-0" : "left-0"}`}
                 style={{
                     background: 'radial-gradient(circle, #763CAC50 0%, rgba(50, 15, 133, 0) 65%)',
                 }} />
