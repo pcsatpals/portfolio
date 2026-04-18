@@ -1,9 +1,11 @@
 "use client";
 
-import { ChevronsUp, Github, Instagram, Linkedin } from "lucide-react"
+import { Button } from "@/components/ui/button";
 import Heart from '@/public/heart.svg'
 import Link from "next/link";
+import { ChevronsUp, Github, Instagram, Linkedin, Heart as HeartIcon } from "lucide-react"
 import Whatsapp from "@/public/whatsapp-icon.svg"
+import Image from "next/image";
 
 const links = [
     {
@@ -27,40 +29,73 @@ const links = [
 
 const Footer = () => {
     function topFunction() {
-        document.body.scrollTop = 0; // For Safari
-        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        document.documentElement.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     }
 
     return (
-        <footer className="relative">
-            <div className=" body-font border-t bg-white/05 backdrop-blur-2xl border-white/15 mt-10 flex flex-col gap-10 font-preahvihear-sans  pt-10 xl:px-0  text-center sm:text-left ">
-                <div className="max-w-6xl mx-auto flex flex-col items-center gap-8">
-                    <button className="flex flex-col gap-2 items-center" onClick={topFunction}>
-                        <ChevronsUp className="animate-bounce" />
-                        <p className="text-3xl">Back to Top</p>
+        <footer className="relative w-full bg-black overflow-hidden h-[600px] pt-20 flex items-end">
+            {/* CTA Hero Section */}
+
+            {/* Background Image with Gradient Overlay */}
+            <Image
+                src="/astronaut-footer.png"
+                alt=""
+                width={1920}
+                height={1080}
+                className="absolute top-[0px] animate-star-movement-top-2 left-1/2 -translate-x-1/2  w-[400px] object-cover  bg-no-repeat"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#11071f] via-[#11071f]/60 to-[#11071f]" />
+
+            {/* Bottom Footer Area */}
+            <div className="relative z-10 flex flex-col w-full gap-10 font-preahvihear-sans py-12 px-6">
+                <div className="max-w-6xl mx-auto w-full flex flex-col md:flex-row justify-between items-center gap-10">
+                    <button
+                        className="flex flex-col gap-2 items-center group transition-all"
+                        onClick={topFunction}
+                    >
+                        <div className="p-3 rounded-full border border-white/10 group-hover:bg-white/5 transition-colors">
+                            <ChevronsUp className="animate-bounce size-6" />
+                        </div>
+                        <p className="text-2xl font-jakarta-sans tracking-tight">Back to Top</p>
                     </button>
-                    <div className="flex gap-3 flex-col items-center">
-                        <p className="font-jakarta-sans text-sm font-light">You may also find on these platform</p>
-                        <div className="flex gap-3 [&_svg]:size-5">
+
+                    <div className="flex flex-col items-center md:items-end gap-4">
+                        <p className="font-jakarta-sans text-sm font-light text-white/40 uppercase tracking-widest">Connect with me</p>
+                        <div className="flex gap-4 [&_svg]:size-5">
                             {links.map((item) => (
-                                <Link href={item.link} key={item.link} target="_blank" className="transition-all duration-150 hover:-translate-y-0.75">
+                                <Link
+                                    href={item.link}
+                                    key={item.link}
+                                    target="_blank"
+                                    className="p-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/15 transition-all duration-300 hover:-translate-y-1"
+                                >
                                     <item.icon />
                                 </Link>
                             ))}
                         </div>
                     </div>
                 </div>
-                <div className="bg-header text-xs flex gap-1 items-center justify-center h-12 font-jakarta-sans font-light">
-                    <p className="pr-1 border-r border-white/20">© 2026</p>
-                    <div className="flex items-center gap-0.75 w-fit">
-                        <span className="border-b border-white/20">Built</span>
-                        with <Heart className="mt-px" /> by Satpal Singh
+
+                <div className="mt-8 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-center md:justify-between gap-4 max-w-6xl mx-auto w-full text-[13px] font-jakarta-sans text-white/30">
+                    <div className="flex items-center gap-4">
+                        <p>© 2026 Satpal Singh</p>
+                        <span className="w-1 h-1 rounded-full bg-white/10" />
+                        <p>All Rights Reserved</p>
+                    </div>
+
+                    <div className="flex items-center gap-1">
+                        <span>Built with</span>
+                        <Heart className="size-3 text-red-500 animate-pulse mx-0.5" />
+                        <span>by</span>
+                        <span className="text-white/60 font-medium">Satpal Singh</span>
                     </div>
                 </div>
             </div>
-            <div className="h-[20%] w-full max-w-screen rounded-full -z-10 blur-3xl absolute bg-primary bottom-0 left-1/2 -translate-x-1/2" />
         </footer>
-    )
-}
+    );
+};
 
 export default Footer

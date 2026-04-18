@@ -37,7 +37,7 @@ const FormFieldWrapper = <T extends FieldValues>({
         name={name}
         disabled={disable}
         render={({ field }) => (
-            <FormItem className="font-inter">
+            <FormItem className="font-inter h-fit">
                 {label && (
                     <FormLabel className="flex gap-0.5 text-sm font-inter ">
                         <span dangerouslySetInnerHTML={{ __html: label }} />
