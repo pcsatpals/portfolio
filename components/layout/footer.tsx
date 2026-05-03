@@ -47,7 +47,7 @@ const Footer = () => {
                 height={1080}
                 className="absolute top-[0px] animate-star-movement-top-2 left-1/2 -translate-x-1/2  w-[400px] object-cover  bg-no-repeat"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#11071f] via-[#11071f]/60 to-[#11071f]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black via-black/60 to-black" />
 
             {/* Bottom Footer Area */}
             <div className="relative z-10 flex flex-col w-full gap-10 font-preahvihear-sans py-12 px-6">

@@ -109,14 +109,14 @@ const ContactMeForm = () => {
     }
 
     return (
-        <div className='w-full relative sm:ml-auto shrink-0 max-w-112.5 px-6 sm:px-10 xl:px-0'>
+        <div className='w-full relative shrink-0 max-w-112.5 sm:px-6 px-4 sm:ml-auto sm:my-auto mx-auto'>
             <div className="flex flex-col gap-8">
                 {/* Highlighted Form Area (No Card) */}
-                <div className="relative p-8 rounded-[2rem] bg-white/[0.03] border border-white/[0.08] backdrop-blur-2xl shadow-2xl transition-all duration-700 hover:shadow-primary/10 overflow-hidden group">
+                <div className="relative lg:p-8 p-4 lg:rounded-[2rem] rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-2xl shadow-2xl transition-all duration-700 hover:shadow-primary/10 overflow-hidden group">
                     {/* Decorative glow inside */}
                     <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-                    <div className="relative space-y-8">
+                    <div className="relative space-y-3">
                         <div>
                             <h2 className='text-3xl font-bold text-white tracking-tight'>
                                 Get in <span className="text-primary">Touch</span>
@@ -127,7 +127,7 @@ const ContactMeForm = () => {
                         </div>
 
                         <Form {...form}>
-                            <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                            <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)} className="lg:space-y-5 space-y-3">
                                 <FieldGroup className="flex flex-col gap-4">
                                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
                                         <div className="relative h-10">
@@ -181,7 +181,7 @@ const ContactMeForm = () => {
                         </Form>
 
                         {/* Interactive Footer Section */}
-                        <div className="pt-6 border-t border-white/[0.05] flex flex-col gap-4">
+                        <div className="pt-3 border-t border-white/[0.05] flex flex-col gap-4">
                             <p className="text-[12px] text-white/30 leading-relaxed">
                                 By submitting, you agree to my response time (usually under 24 hours).
                             </p>
