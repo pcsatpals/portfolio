@@ -65,7 +65,7 @@ const Header = () => {
                     <span className={`transition-all h-0.5 bg-white shrink-0 ${open ? "rotate-50 w-5 -translate-y-2" : "w-3"}`} />
                 </button>
 
-                <nav className={`gap-6  sm:items-center text-base font-jakarta-sans  ${open ? "flex flex-col absolute sm:relative top-full right-4 left-4 mt-4 text-left bg-header rounded-3xl z-999 backdrop-blur-3xl p-5" : "hidden "} sm:flex`}>
+                <nav className={`gap-6  sm:items-center text-base font-jakarta-sans  ${open ? "flex flex-col absolute sm:relative top-full right-4 left-4 mt-4 text-left bg-header border border-white/10 rounded-3xl z-999 backdrop-blur-3xl p-5" : "hidden "} sm:flex`}>
                     {links.map((item, ix) => (
                         <Link
                             href={item.link}
