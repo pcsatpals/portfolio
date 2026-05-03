@@ -56,7 +56,7 @@ const Hero = () => (
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.9, ease: "easeIn" }}
             className='px-6 sm:px-10 xl:px-0 sm:mt-0 mt-10  text-center sm:text-left flex flex-col gap-4'>
-            <div className='text-3xl sm:text-5xl xl:text-[50px]'>
+            <div className='text-3xl sm:text-5xl xl:text-[50px]  sm:h-fit h-[80px]'>
                 {"I'm a "}
                 <TypingAnimation
                     words={["Software Developer", "Software Engineer", "Full Stack Developer", "MERN Stack Developer", "Frontend Developer", "ReactJS Developer", "NextJS Developer", "Backend Developer"]}
