@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import CustomCursor from "@/components/animation/custom-cursor";
 import SessionProvider from "@/providers/next-auth-provider";
 import { QueryProvider } from "@/providers/query-provider";
+import Script from "next/script";
 
 const preahvihearSans = Preahvihear({
     variable: "--font-preahvihear-sans",
@@ -42,6 +43,19 @@ export default function RootLayout({
                     </SessionProvider>
                     <ToastContainer theme="dark" position="bottom-right" />
                 </QueryProvider>
+                <Script id="tawk-to" strategy="afterInteractive">
+                    {`
+                    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+                    (function(){
+                    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+                    s1.async=true;
+                    s1.src='https://embed.tawk.to/6a2e48339e8aac1f4526f018/1jr2di3eq';
+                    s1.charset='UTF-8';
+                    s1.setAttribute('crossorigin','*');
+                    s0.parentNode.insertBefore(s1,s0);
+                    })();
+                    `}
+                </Script>
             </body>
         </html>
     );
