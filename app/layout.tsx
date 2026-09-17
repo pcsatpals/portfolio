@@ -6,6 +6,7 @@ import CustomCursor from "@/components/animation/custom-cursor";
 import SessionProvider from "@/providers/next-auth-provider";
 import { QueryProvider } from "@/providers/query-provider";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next"
 
 const preahvihearSans = Preahvihear({
     variable: "--font-preahvihear-sans",
@@ -56,6 +57,7 @@ export default function RootLayout({
                     })();
                     `}
                 </Script>
+                <Analytics />
             </body>
         </html>
     );
