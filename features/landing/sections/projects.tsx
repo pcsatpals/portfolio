@@ -40,7 +40,6 @@ const Projects = ({ showAll = false }: { showAll?: boolean }) => {
         return <div className="flex flex-col gap-10 mt-8 justify-start w-full px-6 sm:px-10 xl:px-0">
             <ProjectSkeleton />
             <ProjectSkeleton isEven />
-
         </div>
     }
 

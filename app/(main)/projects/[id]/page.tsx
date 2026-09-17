@@ -1,7 +1,9 @@
 import { connectDB } from '@/lib/mongodb';
 import { Project } from '@/models/project.model';
 import Image from 'next/image';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { Github, Globe } from "lucide-react";
 
 const ProjectDetailPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
@@ -37,6 +39,26 @@ const ProjectDetailPage = async ({ params }: { params: Promise<{ id: string }> }
                 />
             ))}
             {project.key_features && <div className="text-sm lg:text-lg" dangerouslySetInnerHTML={{ __html: project.key_features }} />}
+
+            {/* Links */}
+            <h2 className='text-base leading-tight sm:text-lg lg:text-xl font-jakarta-sans font-bold w-full mt-10 '>Links:</h2>
+            <div className="flex gap-4 [&_svg]:size-5 w-full text-xs sm:text-sm">
+                {project.live_url ? <Link
+                    href={project.live_url}
+                    target="_blank"
+                    className="p-3 py-2 rounded-xl flex gap-2 items-center border border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/15 transition-all duration-300 hover:-translate-y-1"
+                >
+                    <Globe /> Website
+                </Link> : null
+                }
+                {project.git_hub ? <Link
+                    href={project.git_hub}
+                    target="_blank"
+                    className="p-3 py-2 rounded-xl flex gap-2 items-center border border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/15 transition-all duration-300 hover:-translate-y-1"          >
+                    <Github />Git hub
+                </Link> : null
+                }
+            </div>
         </main>
     )
 }
