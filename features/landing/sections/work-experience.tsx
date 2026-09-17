@@ -10,12 +10,14 @@ const WorkExperienceList = [
         link: "https://www.suffescom.com",
         company: "Suffescom solutions",
         position: "React.js Developer",
+        src: "/work-exp.svg",
         roles: "Designing and developing reliable software products."
     },
     {
         link: "https://sookshum-labs.com",
         company: "Sookshum labs technologies",
         position: "Software Developer",
+        src: "/work-exp-2.svg",
         roles: "Designing and developing reliable software products."
     }
 ]
@@ -39,13 +41,13 @@ const WorkExperience = () => {
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.93, ease: "easeIn", delay: 0.2 }}
-                className='w-full grid sm:grid-cols-2 grid-cols-1 gap-10'>
+                className='w-full grid sm:grid-cols-2 grid-cols-1 gap-4'>
                 {WorkExperienceList.map((item) => <Link
                     href={item.link}
                     className='w-full  h-fit xl:h-48 rounded-2xl xl:px-12.5 px-6 py-5 xl:py-9 bg-[linear-gradient(to_right,#130428_7%,#251043_34%,#38126D_57%,#261045_85%,#190634_100%)] border-t-4 border-primary flex items-center gap-6.25 hover:shadow-2xl hover:shadow-purple-800 transition-all'
                 >
                     <Image
-                        src="/work-exp.svg"
+                        src={item.src}
                         height={1200}
                         width={1200}
                         alt='work Experience'
