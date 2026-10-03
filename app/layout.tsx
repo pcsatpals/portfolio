@@ -43,6 +43,7 @@ export default function RootLayout({
                         {children}
                     </SessionProvider>
                     <ToastContainer theme="dark" position="bottom-right" />
+                    <Analytics />
                 </QueryProvider>
                 <Script id="tawk-to" strategy="afterInteractive">
                     {`
@@ -57,7 +58,6 @@ export default function RootLayout({
                     })();
                     `}
                 </Script>
-                <Analytics />
             </body>
         </html>
     );
